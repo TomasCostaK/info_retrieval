@@ -35,8 +35,8 @@ if __name__ == "__main__":
     word_dict = {}
     tokenizer = Tokenizer(word_dict)
 
-    tokenizer.read_text('Eça de Queirós - A Cidade e as Serras.txt')
-    tokenizer.read_text('Almeida Garrett - Viagens na Minha Terra.txt')
+    tokenizer.read_text('examples/Eça de Queirós - A Cidade e as Serras.txt')
+    tokenizer.read_text('examples/Almeida Garrett - Viagens na Minha Terra.txt')
     
     #print(tokenizer.word_counter())
     print(tokenizer.top_x_words(3))
