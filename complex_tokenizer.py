@@ -11,8 +11,9 @@ class ComplexTokenizer:
 
         reader = Reader(path)
         words = reader.read_complex_text()
- 
-        words = self.stemmer.stemWords(words)
+        stemmer = Stemmer.Stemmer('english')
+
+        words = stemmer.stemWords(words)
         print(words)
 
         # Iterate over each word in line 
@@ -39,8 +40,9 @@ class ComplexTokenizer:
 
 if __name__ == "__main__":
     word_dict = {}
-    tokenizer = Tokenizer(word_dict)
-    tokenizer.read_text('content/Eça de Queirós - A Cidade e as Serras.txt')
+    tokenizer = ComplexTokenizer(word_dict)
     
-    print(tokenizer.word_counter())
-    #print(tokenizer.top_x_words(3))
+    tokenizer.tokenize('content/all_sources_metadata_2020-03-13.csv')
+    
+    #print(tokenizer.word_counter())
+    print(tokenizer.top_x_words(3))

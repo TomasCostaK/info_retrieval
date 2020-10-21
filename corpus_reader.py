@@ -6,7 +6,6 @@ class Reader:
         self.path = file
     
     def read_text(self):
-        words = []
         my_df = pd.read_csv(self.path)
         my_df = my_df[my_df.abstract.notnull()]
 
@@ -18,9 +17,14 @@ class Reader:
         return words
     
     def read_complex_text(self):
-        words = []
-        text = open(self.path,'r')
-        for line in text: 
-            words.extend(re.sub(""," ",line).lower().split(" ")) #here find a better solution
+
+        my_df = pd.read_csv(self.path)
+        my_df = my_df[my_df.abstract.notnull()]
+
+        str_abstract = my_df['abstract'].str.cat(sep=' ')
+        str_titles = my_df['title'].str.cat(sep=' ')
+        str_final = str_abstract + " " + str_titles # there must a way prettier way to do this
+        
+        words = str_final.lower().split(" ")
 
         return words
