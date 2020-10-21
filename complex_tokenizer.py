@@ -14,12 +14,16 @@ class ComplexTokenizer:
         stemmer = Stemmer.Stemmer('english')
 
         words = stemmer.stemWords(words)
-        print(words)
+        #print(words)
+
+        # Include stopwords in a list, and then not add word if its one of stopwords
+        text = open('content/snowball_stopwords_EN.txt','r')
+        stopwords = [word.strip() for word in text.readlines()]
 
         # Iterate over each word in line 
         for word in words: 
             # Check if the word is already in dictionary 
-            if len(word)<3: # is this enough?
+            if len(word)<3 or word in stopwords: # is this enough?
                 continue
             
             if word in self.word_dict: 
