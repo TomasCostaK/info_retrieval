@@ -9,13 +9,13 @@ class Reader:
         words = []
         my_df = pd.read_csv(self.path)
         my_df = my_df[my_df.abstract.notnull()]
-        print(my_df['abstract'])
-        """
-        text = open(self.path,'r')
-        for line in text: 
-            words.extend(re.sub("[^a-zA-Z]+"," ",line).lower().split(" "))
-        """
-        return ["words"]
+
+        str_abstract = my_df['abstract'].str.cat(sep=' ')
+        str_titles = my_df['title'].str.cat(sep=' ')
+        str_final = str_abstract + " " + str_titles # there must a way prettier way to do this
+
+        words = re.sub("[^0-9a-zA-Z]+"," ",str_final).lower().split(" ")
+        return words
     
     def read_complex_text(self):
         words = []
