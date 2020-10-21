@@ -37,7 +37,7 @@ if __name__ == "__main__":
     word_dict = {}
     tokenizer = Tokenizer(word_dict)
 
-    tokenizer.tokenize('content/exemplo.txt')
+    tokenizer.tokenize('content/all_sources_metadata_2020-03-13.csv')
     
     print(tokenizer.word_counter())
     #print(tokenizer.top_x_words(3))
