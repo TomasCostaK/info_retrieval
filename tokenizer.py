@@ -39,5 +39,5 @@ if __name__ == "__main__":
 
     tokenizer.tokenize('content/all_sources_metadata_2020-03-13.csv')
     
-    print(tokenizer.word_counter())
-    #print(tokenizer.top_x_words(3))
+    #print(tokenizer.word_counter())
+    print(tokenizer.top_x_words(3))
