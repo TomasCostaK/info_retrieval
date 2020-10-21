@@ -1,3 +1,5 @@
+import re
+
 class Tokenizer:
     def __init__(self,word_dict):
         self.word_dict = word_dict
@@ -7,7 +9,7 @@ class Tokenizer:
 
         text = open(path,'r')
         for line in text: 
-            words = line.strip().lower().replace("--","").split(" ")
+            words = re.sub("[^a-zA-Z]+"," ",line).lower().split(" ")
 
             # Iterate over each word in line 
             for word in words: 
@@ -35,8 +37,7 @@ if __name__ == "__main__":
     word_dict = {}
     tokenizer = Tokenizer(word_dict)
 
-    tokenizer.read_text('examples/Eça de Queirós - A Cidade e as Serras.txt')
-    tokenizer.read_text('examples/Almeida Garrett - Viagens na Minha Terra.txt')
+    tokenizer.read_text('examples/exemplo.txt')
     
-    #print(tokenizer.word_counter())
-    print(tokenizer.top_x_words(3))
+    print(tokenizer.word_counter())
+    #print(tokenizer.top_x_words(3))
