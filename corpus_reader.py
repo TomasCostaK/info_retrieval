@@ -9,7 +9,6 @@ class Reader:
         my_df = pd.read_csv(self.path)
         my_df = my_df[my_df.abstract.notnull()]
         words_map = {}
-        final_dict = {}
 
         for index, row in my_df.iterrows(): 
             str_abstract = row['abstract']
@@ -23,10 +22,12 @@ class Reader:
             for word in words:
                 if word not in words_map.keys():
                     #words_map[word] = [index] if index != None else index #deal with nans here
-                    words_map[word] = 1
+                    words_map[word] = [index]
                 else:
-                    words_map[word] += 1
+                    words_map[word] += [index]
 
+            #print(words_map)
+            """
             for k,v in words_map.items():
                 if k in final_dict.keys(): #this means final_dict[k] is a dictionary like:
                     temp_dict = final_dict[k]
@@ -36,8 +37,8 @@ class Reader:
                     final_dict[k] = { "id" + str(index) : v }
 
             #print("Final dict: ", final_dict)
-            print("For document: %s this is words map: %s" % (index,final_dict))
-        
+            # print("For document: %s this is words map: %s" % (index,final_dict))
+            """
         return words
     
     def read_complex_text(self):
