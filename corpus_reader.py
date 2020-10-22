@@ -9,6 +9,7 @@ class Reader:
         my_df = pd.read_csv(self.path)
         my_df = my_df[my_df.abstract.notnull()]
         words_map = {}
+        final_dict = {}
 
         for index, row in my_df.iterrows(): 
             str_abstract = row['abstract']
@@ -17,17 +18,25 @@ class Reader:
 
             words = re.sub("[^0-9a-zA-Z]+"," ",str_final).lower().split(" ")
 
-            
+            #print("\nGoing for Document %s\n" % (index))
+
             for word in words:
                 if word not in words_map.keys():
-                    #words_map[word] = [row['sha']] if row['sha'] != None else index #deal with nans here
-                    words_map[word] = [index]
+                    #words_map[word] = [index] if index != None else index #deal with nans here
+                    words_map[word] = 1
                 else:
-                    lista= words_map[word]
-                    print(lista)
-                    words_map[word] = lista.extend(lista)
-            
-            print(words_map)
+                    words_map[word] += 1
+
+            for k,v in words_map.items():
+                if k in final_dict.keys(): #this means final_dict[k] is a dictionary like:
+                    temp_dict = final_dict[k]
+                    temp_dict["id" +str(index)] = v
+                    final_dict[k] = temp_dict
+                else:
+                    final_dict[k] = { "id" + str(index) : v }
+
+            #print("Final dict: ", final_dict)
+            print("For document: %s this is words map: %s" % (index,final_dict))
         
         return words
     
