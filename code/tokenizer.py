@@ -24,7 +24,7 @@ class Tokenizer:
             tokens = stemmer.stemWords(tokens)
 
             # Include stopwords in a list, and then not add word if its one of stopwords
-            text = open('content/snowball_stopwords_EN.txt','r')
+            text = open('../content/snowball_stopwords_EN.txt','r')
             stopwords = [word.strip() for word in text.readlines()]
 
         # Iterate over each word in line 

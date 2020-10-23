@@ -59,10 +59,25 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
             print(term)
 
 if __name__ == "__main__": #maybe option -t simple or -t complex
+    
+    
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <complex/simple>")
+        sys.exit(1)
+    
     tic = time.time()
     rtli = RTLI()
-    rtli.process()
-    toc = time.time()
+
+    if sys.argv[1] == "complex":
+        rtli.process("complex")
     
+    elif sys.argv[1] == "simple":
+        rtli.process()
+    
+    else:
+        print("Usage: python3 main.py <complex/simple>")
+        sys.exit(1)
+    
+    toc = time.time()
     #print(rtli.indexed_map)
     rtli.domain_questions(toc-tic)
