@@ -26,33 +26,3 @@ class Reader:
                     words_map[word] = [index]
                 else:
                     words_map[word] += [index]
-
-            #print(words_map)
-            """
-            for k,v in words_map.items():
-                if k in final_dict.keys(): #this means final_dict[k] is a dictionary like:
-                    temp_dict = final_dict[k]
-                    temp_dict["id" +str(index)] = v
-                    final_dict[k] = temp_dict
-                else:
-                    final_dict[k] = { "id" + str(index) : v }
-            
-
-            print("Final dict: ", final_dict)
-            """
-            # print("For document: %s this is words map: %s" % (index,final_dict))
-            
-        return words
-    
-    def read_complex_text(self):
-
-        my_df = pd.read_csv(self.path)
-        my_df = my_df[my_df.abstract.notnull()]
-
-        str_abstract = my_df['abstract'].str.cat(sep=' ')
-        str_titles = my_df['title'].str.cat(sep=' ')
-        str_final = str_abstract + " " + str_titles # there must a way prettier way to do this
-        
-        words = str_final.lower().split(" ")
-
-        return words
