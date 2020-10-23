@@ -15,7 +15,7 @@ class Reader:
             str_titles = row['title']
             str_final = str_abstract + " " + str_titles # there must a way prettier way to do this
 
-            words = re.sub("[^0-9a-zA-Z]+"," ",str_final).lower().split(" ")
+            words = re.sub("[^a-zA-Z]+"," ",str_final).lower().split(" ")
 
             #print("\nGoing for Document %s\n" % (index))
 
