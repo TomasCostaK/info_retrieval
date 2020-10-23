@@ -8,7 +8,8 @@ class Reader:
     def read_text(self):
         my_df = pd.read_csv(self.path)
         my_df = my_df[my_df.abstract.notnull()]
-        words_map = {}
+
+        return my_df
 
         for index, row in my_df.iterrows(): 
             str_abstract = row['abstract']

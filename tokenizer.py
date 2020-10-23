@@ -3,8 +3,8 @@ from corpus_reader import Reader
 import time
 
 class Tokenizer:
-    def __init__(self,word_dict):
-        self.word_dict = word_dict
+    def __init__(self):
+        self.word_dict = {}
 
     # Function to read any text and add it to the word dictionary of the Tokenizer
     def tokenize(self,path):
