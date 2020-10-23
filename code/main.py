@@ -3,6 +3,7 @@ from tokenizer import Tokenizer
 from indexer import Indexer
 import time
 from functools import reduce
+import sys
 
 import pandas as pd
 
@@ -32,11 +33,36 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
 
         self.indexed_map = self.indexer.getIndexed()
 
+    def domain_questions(self,time):
+        # Question a)
+        mem_size = sys.getsizeof(self.indexed_map) / 1024 / 1024
+        print("A) Estimated process time: %.4fs and spent %.2f Mb of memory" % (time,mem_size))
+
+        # Question b)
+        vocab_size = len(self.indexed_map.keys())
+        print("B) Vocabulary size is: %d" % (vocab_size))
+
+        # Question c)
+        ten_least_frequent = [ key for (key,value) in sorted(self.indexed_map.items(), key=lambda x: (len(x[1]), x[0]), reverse=False)[:10]] # i think we can do this, because these keys only have 1 value, which is the least possible to get inserted into the dict
+        # sort alphabetical
+        #ten_least_frequent.sort()
+        print("\nC) Ten least frequent terms:")
+        for term in ten_least_frequent:
+            print(term)
+
+        # Question d)
+        ten_most_frequent = [ key for (key,value) in sorted(self.indexed_map.items(), key=lambda x: (len(x[1]), x[0]), reverse=True)[:10]] # i think we can do this, because these keys only have 1 value, which is the least possible to get inserted into the dict
+        # sort alphabetical
+        #ten_most_frequent.sort()
+        print("\nD) Ten most frequent terms:")
+        for term in ten_most_frequent:
+            print(term)
+
 if __name__ == "__main__": #maybe option -t simple or -t complex
     tic = time.time()
     rtli = RTLI()
     rtli.process()
     toc = time.time()
-    print(rtli.indexed_map)
-
-    print("Estimated time: %.4f s" % (toc-tic))
+    
+    #print(rtli.indexed_map)
+    rtli.domain_questions(toc-tic)
