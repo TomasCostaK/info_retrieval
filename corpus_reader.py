@@ -35,10 +35,12 @@ class Reader:
                     final_dict[k] = temp_dict
                 else:
                     final_dict[k] = { "id" + str(index) : v }
+            
 
-            #print("Final dict: ", final_dict)
-            # print("For document: %s this is words map: %s" % (index,final_dict))
+            print("Final dict: ", final_dict)
             """
+            # print("For document: %s this is words map: %s" % (index,final_dict))
+            
         return words
     
     def read_complex_text(self):
