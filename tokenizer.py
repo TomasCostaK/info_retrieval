@@ -1,5 +1,6 @@
 import re
 from corpus_reader import Reader
+import time
 
 class Tokenizer:
     def __init__(self,word_dict):
@@ -35,9 +36,11 @@ class Tokenizer:
 
 if __name__ == "__main__":
     word_dict = {}
+    tic = time.time()
     tokenizer = Tokenizer(word_dict)
 
     tokenizer.tokenize('content/all_sources_metadata_2020-03-13.csv')
-    
+    toc = time.time()
+    print("Estimated time: %.3f s" % (toc-tic))
     #print(tokenizer.word_counter())
     print(tokenizer.top_x_words(3))

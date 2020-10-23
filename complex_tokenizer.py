@@ -11,14 +11,19 @@ class ComplexTokenizer:
 
         reader = Reader(path)
         words = reader.read_complex_text()
- 
-        words = self.stemmer.stemWords(words)
-        print(words)
+        stemmer = Stemmer.Stemmer('english')
+
+        words = stemmer.stemWords(words)
+        #print(words)
+
+        # Include stopwords in a list, and then not add word if its one of stopwords
+        text = open('content/snowball_stopwords_EN.txt','r')
+        stopwords = [word.strip() for word in text.readlines()]
 
         # Iterate over each word in line 
         for word in words: 
             # Check if the word is already in dictionary 
-            if len(word)<3: # is this enough?
+            if len(word)<3 or word in stopwords: # is this enough?
                 continue
             
             if word in self.word_dict: 
@@ -39,8 +44,9 @@ class ComplexTokenizer:
 
 if __name__ == "__main__":
     word_dict = {}
-    tokenizer = Tokenizer(word_dict)
-    tokenizer.read_text('content/Eça de Queirós - A Cidade e as Serras.txt')
+    tokenizer = ComplexTokenizer(word_dict)
     
-    print(tokenizer.word_counter())
-    #print(tokenizer.top_x_words(3))
+    tokenizer.tokenize('content/all_sources_metadata_2020-03-13.csv')
+    
+    #print(tokenizer.word_counter())
+    print(tokenizer.top_x_words(3))
