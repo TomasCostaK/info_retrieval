@@ -29,7 +29,7 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
 
         with open('../content/all_sources_metadata_2020-03-13.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
-        
+                        
             for row in reader: 
                 index = row['doi']
                 # Tokenizer step
@@ -51,8 +51,6 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
     def domain_questions(self,time):
         # Question a)
         mem_size = self.calculate_dict_size(self.indexed_map) / 1024 / 1024
-        #process = psutil.Process(os.getpid())
-        #mem_size = process.memory_info()[0] / 1024 / 1024
         print("A) Estimated process time: %.4fs and spent %.2f Mb of memory" % (time,mem_size))
 
         # Question b)
