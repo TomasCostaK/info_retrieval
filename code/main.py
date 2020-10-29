@@ -50,7 +50,7 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
 
     def domain_questions(self,time):
         # Question a)
-        mem_size = sys.getsizeof(self.indexed_map) / 1024 / 1024
+        mem_size = self.calculate_dict_size(self.indexed_map) / 1024 / 1024
         #process = psutil.Process(os.getpid())
         #mem_size = process.memory_info()[0] / 1024 / 1024
         print("A) Estimated process time: %.4fs and spent %.2f Mb of memory" % (time,mem_size))
@@ -74,6 +74,14 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
         print("\nD) Ten most frequent terms:")
         for term in ten_most_frequent:
             print(term)
+
+    
+    def calculate_dict_size(self,input_dict):
+        mem_size = 0
+        for key,value in input_dict.items():
+            mem_size += sys.getsizeof(value)   # in python they dont count size, so we have to do it iteratively
+
+        return mem_size + sys.getsizeof(input_dict) # adding the own dictionary size
 
 if __name__ == "__main__": #maybe option -t simple or -t complex
     
