@@ -27,7 +27,7 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
         # for each row in the datafram we will tokenize and index
         tic = time.time()
 
-        with open('../content/all_sources_metadata_2020-03-13.csv', newline='') as csvfile:
+        with open('../content/all_sources_metadata_2020-03-13.csv', newline='', encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
                         
             for row in reader: 
