@@ -30,7 +30,7 @@ class Tokenizer:
         # Iterate over each word in line 
         for token in tokens: 
             # Disregard words with less than 3 chars, or if they are a stopword
-            if len(token)<3 or token in stopwords : 
+            if len(token)<3 or token in stopwords: 
                 continue
 
             # if it passes the condition, we shall add it to the final_tokens
