@@ -5,6 +5,12 @@ import sys
 import os
 import csv
 
+"""
+Authors:
+Tomás Costa - 89016  
+André Gual - 88751
+"""
+
 
 class RTLI:  # Reader, tokenizer, linguistic, indexer
     def __init__(self, tokenizer_mode, file='../content/all_sources_metadata_2020-03-13.csv', stopwords_file="../content/snowball_stopwords_EN.txt", chunksize=10000):

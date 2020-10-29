@@ -1,5 +1,9 @@
 # RI_Assignment1
 
+## Authors
+Tomás Costa - 89016  
+André Gual - 88751
+
 ## Requirements
 You need to install the requirements with pip:
 ```
