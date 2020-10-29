@@ -4,37 +4,38 @@ from indexer import Indexer
 import time
 from functools import reduce
 import sys
-
-import pandas as pd
+import os
+import psutil
+import csv
 
 class RTLI: #Reader, tokenizer, linguistic, indexer
-    def __init__(self,file='../content/all_sources_metadata_2020-03-13.csv'):
+    def __init__(self,tokenizer_mode,file='../content/all_sources_metadata_2020-03-13.csv',stopwords_file="../content/snowball_stopwords_EN.txt"):
         self.reader = Reader(file)
-        self.tokenizer = Tokenizer()
+        self.tokenizer = Tokenizer(tokenizer_mode,stopwords_file)
         self.indexer = Indexer()
 
         # tryout for new structure in dict
         self.indexed_map = {}
 
-    def process(self,tokenizer_mode="simple",stopwords=[]):
+    def process(self):
 
         # Reading step
-        dataframe = self.reader.read_text() # This provides a pandas dataframe
+        #dataframe = self.reader.read_text() # This provides a pandas dataframe
         tokens = []
         
-        #stopwords definition here, so we dont need to open them everytime
-        # Include stopwords in a list, and then not add word if its one of stopwords
-        if tokenizer_mode != "simple":
-            text = open('../content/snowball_stopwords_EN.txt','r')
-            stopwords = [word.strip() for word in text.readlines()]
 
         # for each row in the datafram we will tokenize and index
         tic = time.time()
-        for index, row in dataframe.iterrows(): 
 
-            # Tokenizer step
-            appended_string = row['abstract'] + " " + row['title']
-            tokens += self.tokenizer.tokenize(appended_string, index , stopwords, tokenizer_mode=tokenizer_mode)
+        with open('../content/all_sources_metadata_2020-03-13.csv', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+        
+            for row in reader: 
+                index = row['doi']
+                # Tokenizer step
+                if row['abstract'] != "":
+                    appended_string = row['abstract'] + " " + row['title']
+                    tokens += self.tokenizer.tokenize(appended_string, index)
 
             # Indexer step
         toc = time.time()
@@ -50,6 +51,8 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
     def domain_questions(self,time):
         # Question a)
         mem_size = sys.getsizeof(self.indexed_map) / 1024 / 1024
+        #process = psutil.Process(os.getpid())
+        #mem_size = process.memory_info()[0] / 1024 / 1024
         print("A) Estimated process time: %.4fs and spent %.2f Mb of memory" % (time,mem_size))
 
         # Question b)
@@ -79,19 +82,19 @@ if __name__ == "__main__": #maybe option -t simple or -t complex
         print("Usage: python3 main.py <complex/simple>")
         sys.exit(1)
     
-    tic = time.time()
-    rtli = RTLI()
 
     if sys.argv[1] == "complex":
-        rtli.process("complex")
+        rtli = RTLI(tokenizer_mode="complex")
     
     elif sys.argv[1] == "simple":
-        rtli.process()
+        rtli = RTLI(tokenizer_mode="simple")
     
     else:
         print("Usage: python3 main.py <complex/simple>")
         sys.exit(1)
     
+    tic = time.time()
+    rtli.process()
     toc = time.time()
     #print(rtli.indexed_map)
     rtli.domain_questions(toc-tic)
