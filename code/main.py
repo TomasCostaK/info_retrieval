@@ -10,7 +10,7 @@ import csv
 
 class RTLI: #Reader, tokenizer, linguistic, indexer
     def __init__(self,tokenizer_mode,file='../content/all_sources_metadata_2020-03-13.csv',stopwords_file="../content/snowball_stopwords_EN.txt"):
-        self.reader = Reader(file)
+        self.reader = Reader(file) 
         self.tokenizer = Tokenizer(tokenizer_mode,stopwords_file)
         self.indexer = Indexer()
 
