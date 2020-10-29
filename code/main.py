@@ -16,20 +16,34 @@ class RTLI: #Reader, tokenizer, linguistic, indexer
         # tryout for new structure in dict
         self.indexed_map = {}
 
-    def process(self,tokenizer_mode="simple"):
+    def process(self,tokenizer_mode="simple",stopwords=[]):
 
         # Reading step
         dataframe = self.reader.read_text() # This provides a pandas dataframe
+        tokens = []
         
+        #stopwords definition here, so we dont need to open them everytime
+        # Include stopwords in a list, and then not add word if its one of stopwords
+        if tokenizer_mode != "simple":
+            text = open('../content/snowball_stopwords_EN.txt','r')
+            stopwords = [word.strip() for word in text.readlines()]
+
         # for each row in the datafram we will tokenize and index
+        tic = time.time()
         for index, row in dataframe.iterrows(): 
 
             # Tokenizer step
             appended_string = row['abstract'] + " " + row['title']
-            tokens = self.tokenizer.tokenize(appended_string,tokenizer_mode=tokenizer_mode)
+            tokens += self.tokenizer.tokenize(appended_string, index , stopwords, tokenizer_mode=tokenizer_mode)
 
             # Indexer step
-            self.indexer.index(tokens, index)    
+        toc = time.time()
+        print("Estimated tokenizing/stemming time: %.4fs" % (toc-tic))
+
+        tic = time.time()
+        self.indexer.index(tokens, index)    
+        toc = time.time()
+        print("Estimated indexing time: %.4fs" % (toc-tic))
 
         self.indexed_map = self.indexer.getIndexed()
 
