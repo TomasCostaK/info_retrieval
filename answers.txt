@@ -1,0 +1,55 @@
+Complex Tokenizer:
+    A) Estimated process time: 28.4125s and spent 79.49 Mb of memory
+    B) Vocabulary size is: 58115
+
+    C) Ten least frequent terms:
+    0000
+    0000005
+    0000011
+    000045
+    000055
+    00006181
+    0002755
+    00046
+    00049
+    00056
+
+    D) Ten most frequent terms:
+    virus
+    infect
+    use
+    studi
+    result
+    diseas
+    cell
+    viral
+    human
+    protein
+
+Simple Tokenizer:
+    A) Estimated process time: 10.7146s and spent 95.07 Mb of memory
+    B) Vocabulary size is: 61050
+
+    C) Ten least frequent terms:
+    aaaaaag
+    aaaauga
+    aaac
+    aaag
+    aaap
+    aaars
+    aabb
+    aacaaaaaaggg
+    aacetaminophen
+    aacgaa
+
+    D) Ten most frequent terms:
+    the
+    and
+    for
+    with
+    that
+    this
+    from
+    was
+    are
+    were

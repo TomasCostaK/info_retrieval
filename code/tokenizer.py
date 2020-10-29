@@ -1,7 +1,5 @@
 import re
 import Stemmer
-from corpus_reader import Reader
-import time
 
 class Tokenizer:
     def __init__(self,tokenizer_mode,stopwords_file):

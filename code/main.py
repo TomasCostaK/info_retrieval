@@ -1,4 +1,3 @@
-from corpus_reader import Reader
 from tokenizer import Tokenizer
 from indexer import Indexer
 import time
@@ -9,9 +8,9 @@ import csv
 
 class RTLI:  # Reader, tokenizer, linguistic, indexer
     def __init__(self, tokenizer_mode, file='../content/all_sources_metadata_2020-03-13.csv', stopwords_file="../content/snowball_stopwords_EN.txt", chunksize=10000):
-        self.reader = Reader(file)
         self.tokenizer = Tokenizer(tokenizer_mode, stopwords_file)
         self.indexer = Indexer()
+        self.file = file
 
         # defines the number of lines to be read at once
         self.chunksize = chunksize
@@ -30,15 +29,11 @@ class RTLI:  # Reader, tokenizer, linguistic, indexer
         yield chunk
 
     def process(self):
+        tokens = []
 
         # Reading step
-        #dataframe = self.reader.read_text() # This provides a pandas dataframe
-        tokens = []
-        
-        # for each row in the datafram we will tokenize and index
-        tic = time.time()
-
-        with open('../content/all_sources_metadata_2020-03-13.csv', newline='', encoding="utf-8") as csvfile:
+        # We passed the reader to here, so we could do reading chunk by chunk
+        with open(self.file, newline='', encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
 
             for chunk in self.gen_chunks(reader):
@@ -49,13 +44,10 @@ class RTLI:  # Reader, tokenizer, linguistic, indexer
                         appended_string = row['abstract'] + " " + row['title']
                         tokens += self.tokenizer.tokenize(appended_string, index)
             
-                toc = time.time()
-                print("Estimated tokenizing/stemming time: %.4fs" % (toc-tic))
+                #print("Estimated tokenizing/stemming time: %.4fs" % (toc-tic)) #useful for debugging
 
-                tic = time.time()
                 self.indexer.index(tokens, index)
-                toc = time.time()
-                print("Estimated indexing time: %.4fs" % (toc-tic))
+                #print("Estimated indexing time: %.4fs" % (toc-tic)) #useful for debugging
 
         self.indexed_map = self.indexer.getIndexed()
 
@@ -112,7 +104,7 @@ if __name__ == "__main__":  # maybe option -t simple or -t complex
         rtli = RTLI(tokenizer_mode="simple",chunksize=int(sys.argv[2]))
 
     else:
-        print("Usage: python3 main.py <complex/simple>")
+        print("Usage: python3 main.py <complex/simple> <chunksize>")
         sys.exit(1)
 
     tic = time.time()
